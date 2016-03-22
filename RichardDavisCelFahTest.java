@@ -87,5 +87,9 @@ public class RichardDavisCelFahTest
         System.out.printf("     %5.2f | %5.2f\n", (double)i, temp_converted);
       }
     }
+
+    // closes scanner object and terminates program
+    in.close();
+    System.exit(0);
   }
 }
