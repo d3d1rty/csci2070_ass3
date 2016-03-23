@@ -28,4 +28,24 @@ public class RichardDavisRational
     numerator = num;
     denominator = den;
   }
+
+  /**
+   * This method gets the value of the numerator
+   *
+   * @return  numerator  the numerator of a fraction
+   */
+  public int getNumerator()
+  {
+    return numerator;
+  }
+
+  /**
+   * This method gets the value of the denominator
+   *
+   * @return  denominator the denominator of a fraction
+   */
+  public int getDenominator()
+  {
+    return denominator;
+  }
 }
