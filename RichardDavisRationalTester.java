@@ -1,3 +1,5 @@
+import java.util.Scanner;
+
 /**
  * This class tests the RichardDavisRationalTester class
  * Author: Richard Davis
@@ -154,7 +156,7 @@ public class RichardDavisRationalTester
   }
 
   /**
-   * This method overloads toFlot method allowing precision to be set
+   * This method overloads toFloat method allowing precision to be set
    *
    * @param   x    the rational number to convert
    * @param   i    the number of digits for precision
@@ -162,56 +164,14 @@ public class RichardDavisRationalTester
    */
   public static float toFloat(RichardDavisRational x, int i)
   {
+    int j = 0;
     float flt = (float)x.getNumerator() / x.getDenominator();
-    String str = Float.toString(flt);
-    char[] strBuffer = new char[str.length()];
-    String fStr = "";
-    boolean rounded = false;
-    boolean hasDecimal = false;
-    int k = 0;
-    int decimalPos = 0;
-    int digits = 0;
-    int tempNum = 0;
-    int tempNumTwo = 0;
-
-    for (int j = 0; j <= str.length()-1; j++) {
-      strBuffer[j] = str.charAt(j);
+    float shift = 1;
+    while (j < i) {
+      shift = shift * 10;
+      j++;
     }
-
-    while (!hasDecimal) {
-      if (k >= strBuffer.length-i) {
-        break;
-      }
-      if (Character.valueOf(strBuffer[k]).compareTo('.') == 0) {
-        decimalPos = k+1;
-        hasDecimal = true;
-      }
-      fStr = fStr + strBuffer[k];
-      k++;
-    }
-
-    digits = strBuffer.length - (decimalPos);
-
-    while (!rounded) {
-      if (k > i) {
-        break;
-      } else if (strBuffer.length - digits == i){
-        tempNum = Integer.valueOf(String.valueOf(strBuffer[k+1]));
-        tempNumTwo = Integer.valueOf(String.valueOf(strBuffer[k+2]));
-        if (tempNumTwo >= 5) {
-          tempNum++;
-        }
-        fStr = fStr + strBuffer[k] + tempNum;
-        rounded = true;
-      } else {
-        fStr = fStr + strBuffer[k];
-      }
-      digits--;
-      k++;
-    }
-
-    flt = Float.valueOf(fStr);
-    return flt;
+    return Math.round(flt*shift)/shift;
   }
 
 
@@ -222,32 +182,62 @@ public class RichardDavisRationalTester
 
   public static void main(String args[])
   {
+    Scanner in = new Scanner(System.in);
+    RichardDavisRational x = new RichardDavisRational(1, 9);
+    RichardDavisRational y = new RichardDavisRational(1, 11);
+    RichardDavisRational a = new RichardDavisRational(7, 8);
+    RichardDavisRational b = new RichardDavisRational(3, 5);
+    int userInput = 0;
+
     // adds rational numbers
-    RichardDavisRational x = new RichardDavisRational(6, 8);
-    RichardDavisRational y = new RichardDavisRational(8, 24);
+    System.out.println("Running add() method test cases...");
+    System.out.println("Test Case 1:");
     RichardDavisRational sum  = add(x, y);
     System.out.println(print(x) + " + " + print(y) + " = " + print(sum));
+    System.out.println("Test Case 2:");
+    sum  = add(a, b);
+    System.out.println(print(a) + " + " + print(b) + " = " + print(sum));
 
     // subtracts rational numbers
+    System.out.println("\nRunning subtract() method test cases...");
+    System.out.println("Test Case 1:");
     RichardDavisRational difference = subtract(x, y);
     System.out.println(print(x) + " - " + print(y) + " = " + print(difference));
+    System.out.println("Test Case 2:");
+    difference = subtract(a, b);
+    System.out.println(print(a) + " - " + print(b) + " = " + print(difference));
 
     // multiplies rational numbers
+    System.out.println("\nRunning multiply() method test cases...");
+    System.out.println("Test Case 1:");
     RichardDavisRational product = multiply(x, y);
     System.out.println("(" + print(x) + ")" + " * " + "(" + print(y) + ")" + " = " + print(product));
+    System.out.println("Test Case 2:");
+    product = multiply(a, b);
+    System.out.println("(" + print(a) + ")" + " * " + "(" + print(b) + ")" + " = " + print(product));
 
     // divides rational numbers
+    System.out.println("\nRunning divide() method test cases...");
+    System.out.println("Test Case 1:");
     RichardDavisRational quotient = divide(x, y);
     System.out.println("(" + print(x) + ")" + " / " + "(" + print(y) + ")" + " = " + print(quotient));
+    System.out.println("Test Case 2:");
+    quotient = divide(a, b);
+    System.out.println("(" + print(a) + ")" + " / " + "(" + print(b) + ")" + " = " + print(quotient));
 
-    // converts rational number to float
-    System.out.println(print(x) + " == " + toFloat(x));
+    // converts rational number using toFloat method
+    System.out.println("\nRunning toFloat() method test cases...");
+    System.out.println("Test Case 1:");
+    System.out.println(print(y) + " = " + toFloat(y));
+    System.out.println("Test Case 2:");
+    System.out.println(print(x) + " = " + toFloat(x));
 
-    // converts the rational number to float with precision of userInput variable
-    int userInput = 3;
-    System.out.println(print(y) + " == " + toFloat(y, userInput));
-    System.out.println(print(x) + " == " + toFloat(x, userInput));
-    System.out.println(print(sum) + " == " + toFloat(sum, userInput));
-    System.out.println(print(sum) + " == " + toFloat(sum, 4));
+    // converts rational number using toFloat method
+    System.out.print("\nEnter an integer value for the precision of the float -> ");
+    userInput = in.nextInt();
+    System.out.println(print(y) + " = " + toFloat(y, userInput));
+    System.out.print("Enter an integer value for the precision of the float -> ");
+    userInput = in.nextInt();
+    System.out.println(print(x) + " = " + toFloat(x, userInput));
   }
 }
